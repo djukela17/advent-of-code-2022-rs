@@ -1,7 +1,10 @@
+extern crate core;
+
 use std::fs;
 use std::time::{Duration, Instant};
 
 mod day01;
+mod day02;
 
 pub fn run(day: i32) {
 
@@ -13,6 +16,15 @@ pub fn run(day: i32) {
             println!("day01::part_one() = {}", result);
 
             let result = day01::part_two(input.clone());
+            println!("day01::part_two() = {}", result);
+        }
+        2 => {
+            let input = read_input(day);
+
+            let result = day02::part_one(input.clone());
+            println!("day01::part_one() = {}", result);
+
+            let result = day02::part_two(input.clone());
             println!("day01::part_two() = {}", result);
         }
         _ => println!("no puzzle for day {}", day)
