@@ -5,12 +5,16 @@ pub fn part_one(input: String) -> i32 {
 
     let (_enemy_score, my_score): (i32, i32) = rounds
         .into_iter()
-        .map(|round| -> (i32, i32) {
-            round.calculate_points()
-        })
-        .fold((0, 0), |total_scores: (i32, i32), round_scores: (i32, i32)| -> (i32, i32) {
-            (total_scores.0 + round_scores.0, total_scores.1 + round_scores.1)
-        });
+        .map(|round| -> (i32, i32) { round.calculate_points() })
+        .fold(
+            (0, 0),
+            |total_scores: (i32, i32), round_scores: (i32, i32)| -> (i32, i32) {
+                (
+                    total_scores.0 + round_scores.0,
+                    total_scores.1 + round_scores.1,
+                )
+            },
+        );
 
     my_score
 }
@@ -20,30 +24,28 @@ pub fn part_two(input: String) -> i32 {
 
     let (_enemy_score, my_score): (i32, i32) = rounds
         .into_iter()
-        .map(|round| -> (i32, i32) {
-            round.calculate_points()
-        })
-        .fold((0, 0), |total_scores: (i32, i32), round_scores: (i32, i32)| -> (i32, i32) {
-            (total_scores.0 + round_scores.0, total_scores.1 + round_scores.1)
-        });
+        .map(|round| -> (i32, i32) { round.calculate_points() })
+        .fold(
+            (0, 0),
+            |total_scores: (i32, i32), round_scores: (i32, i32)| -> (i32, i32) {
+                (
+                    total_scores.0 + round_scores.0,
+                    total_scores.1 + round_scores.1,
+                )
+            },
+        );
 
     my_score
 }
-
 
 fn parse_input(input: String) -> Vec<Round> {
     input
         .lines()
         .filter(|line| *line != "")
         .map(|line| -> Round {
-            let parts: Vec<&str> = line
-                .split(" ")
-                .collect();
+            let parts: Vec<&str> = line.split(" ").collect();
 
-            Round::new(
-                Shape::new(parts[0]),
-                Shape::new(parts[1]),
-            )
+            Round::new(Shape::new(parts[0]), Shape::new(parts[1]))
         })
         .collect()
 }
@@ -53,9 +55,7 @@ fn parse_input_v2(input: String) -> Vec<Round> {
         .lines()
         .filter(|line| *line != "")
         .map(|line| -> Round {
-            let parts: Vec<&str> = line
-                .split(" ")
-                .collect();
+            let parts: Vec<&str> = line.split(" ").collect();
 
             let enemy_shape = Shape::new(parts[0]);
 
@@ -63,7 +63,7 @@ fn parse_input_v2(input: String) -> Vec<Round> {
                 "X" => enemy_shape.wins_against(),
                 "Y" => enemy_shape.clone(),
                 "Z" => enemy_shape.loses_against(),
-                _ => panic!("invalid")
+                _ => panic!("invalid"),
             };
 
             Round::new(enemy_shape, my_shape)
@@ -79,7 +79,10 @@ struct Round {
 
 impl Round {
     pub fn new(enemy_play: Shape, my_play: Shape) -> Round {
-        Round { enemy_play, my_play }
+        Round {
+            enemy_play,
+            my_play,
+        }
     }
 
     pub fn calculate_points(&self) -> (i32, i32) {
@@ -108,33 +111,27 @@ impl Shape {
             "Y" => Shape::Paper,
             "C" => Shape::Scissors,
             "Z" => Shape::Scissors,
-            _ => panic!("invalid input shape")
+            _ => panic!("invalid input shape"),
         }
     }
 
     pub fn compare(&self, other: &Self) -> (i32, i32) {
         match self {
-            Shape::Rock => {
-                match other {
-                    Shape::Rock => (3, 3),
-                    Shape::Paper => (0, 6),
-                    Shape::Scissors => (6, 0),
-                }
-            }
-            Shape::Paper => {
-                match other {
-                    Shape::Rock => (6, 0),
-                    Shape::Paper => (3, 3),
-                    Shape::Scissors => (0, 6),
-                }
-            }
-            Shape::Scissors => {
-                match other {
-                    Shape::Rock => (0, 6),
-                    Shape::Paper => (6, 0),
-                    Shape::Scissors => (3, 3),
-                }
-            }
+            Shape::Rock => match other {
+                Shape::Rock => (3, 3),
+                Shape::Paper => (0, 6),
+                Shape::Scissors => (6, 0),
+            },
+            Shape::Paper => match other {
+                Shape::Rock => (6, 0),
+                Shape::Paper => (3, 3),
+                Shape::Scissors => (0, 6),
+            },
+            Shape::Scissors => match other {
+                Shape::Rock => (0, 6),
+                Shape::Paper => (6, 0),
+                Shape::Scissors => (3, 3),
+            },
         }
     }
 

@@ -3,9 +3,7 @@ pub fn part_one(input: String) -> i32 {
 
     calorie_groups
         .into_iter()
-        .map(|calories| -> i32 {
-            calories.into_iter().sum()
-        })
+        .map(|calories| -> i32 { calories.into_iter().sum() })
         .max()
         .unwrap()
 }
@@ -15,9 +13,7 @@ pub fn part_two(input: String) -> i32 {
 
     let mut calories: Vec<i32> = calorie_groups
         .into_iter()
-        .map(|calories| -> i32 {
-            calories.into_iter().sum()
-        })
+        .map(|calories| -> i32 { calories.into_iter().sum() })
         .collect();
 
     calories.sort();

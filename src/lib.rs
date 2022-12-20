@@ -5,9 +5,9 @@ use std::time::{Duration, Instant};
 
 mod day01;
 mod day02;
+mod day03;
 
 pub fn run(day: i32) {
-
     match day {
         1 => {
             let input = read_input(day);
@@ -27,7 +27,16 @@ pub fn run(day: i32) {
             let result = day02::part_two(input.clone());
             println!("day01::part_two() = {}", result);
         }
-        _ => println!("no puzzle for day {}", day)
+        3 => {
+            let input = read_input(day);
+
+            let result = day03::part_one(input.clone());
+            println!("day03::part_one() = {}", result);
+
+            let result = day03::part_two(input.clone());
+            println!("day03::part_two() = {}", result);
+        }
+        _ => println!("no puzzle for day {}", day),
     }
 }
 
@@ -54,8 +63,8 @@ fn read_input(day: i32) -> String {
 // measure is a utility function for measuring the execution time taken by the
 // passed function
 fn measure<F>(f: F) -> Duration
-    where
-        F: FnOnce(),
+where
+    F: FnOnce(),
 {
     let start = Instant::now();
     f();
